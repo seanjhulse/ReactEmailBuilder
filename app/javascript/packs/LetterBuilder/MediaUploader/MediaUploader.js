@@ -64,8 +64,13 @@ class MediaUploader extends Component {
       },
     })
     .then((response) => response.json())
-    .then((results) => this.setState({displayPictures: results}))
-    .then(() => this.setState({toBeUploadedPicture: {}, disableUpload: true}));
+    .then((results) => {
+      this.setState({
+        displayPictures: results,
+        toBeUploadedPicture: {},
+        disableUpload: true
+      })
+    })
   }
 
   chosePhoto(event) {
@@ -91,7 +96,7 @@ class MediaUploader extends Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
-          <form className="new_picture" id="new_picture" encType="multipart/form-data" action="/upload_image" acceptCharset="UTF-8" onSubmit={(e) => this.submitPhoto(e)} data-remote="true" method="post">
+          <form className="new_picture" id="new_picture" encType="multipart/form-data" action="/upload_image" acceptCharset="UTF-8" onSubmit={(e) => setTimeout(() => this.submitPhoto(e), 2000)} data-remote="true" method="post">
             <input name="utf8" type="hidden" value="✓" />
             <input type="hidden" name="authenticity_token" value="m98usILW1Ua8t+17IzVIwX89an2xQAqcPf+EESw368MYkyvuFbfRGqnxuy0gskTyyrMbjy6hhl9p6kTlmnxukA==" />
             <p>

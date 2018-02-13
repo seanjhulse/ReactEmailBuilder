@@ -7,13 +7,14 @@ const mapStateToProps = (state) => ({
   ...state.selectedPicture
 })
 
-const RemovePicture = ({dispatch}) => {
+const RemovePicture = ({dispatch, rowKey, columnKey}) => {
   return (
     <RaisedButton
       key="RemovePhotoFromColumn"
       label="Remove"
       secondary={true}
-      onClick={() => { dispatch(deletePicture()) } }
+      className="removePhotoButton"
+      onClick={() => { dispatch(deletePicture(rowKey, columnKey)) } }
     />
   )
 }

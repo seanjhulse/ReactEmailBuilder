@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20180209204609) do
 
   create_table "letters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "subject"
+    t.text "letter"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -25,6 +26,7 @@ ActiveRecord::Schema.define(version: 20180209204609) do
   end
 
   create_table "templates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
     t.text "template"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

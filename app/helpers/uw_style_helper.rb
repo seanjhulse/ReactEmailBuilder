@@ -14,7 +14,11 @@ module UwStyleHelper
           ]
         },
         {
-          title: 'Build a Letter', link: new_letter_path,
+          title: 'Letters', link: '#',
+          :dropdown => [
+            { title: 'View All', link: letters_path },
+            { title: 'New', link: new_letter_path },
+          ]
         },
       ],
 

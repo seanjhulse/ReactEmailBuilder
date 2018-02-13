@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { fetchTemplates } from '../store/actions';
+import { restoreState } from '../store/actions';
 import TemplatesDropDown from '../TemplatesDropDown';
 import SubjectField from '../SubjectField';
 import FormBuilder from './FormBuilder';
@@ -16,7 +16,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchTemplates: (templates) => dispatch(fetchTemplates(templates))
+    restoreState: (data) => dispatch(restoreState(data))
   }
 }
 
@@ -33,16 +33,20 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    const { fetchTemplates } = this.props;
-    fetch('/templates', {
-      method: 'get',
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-    })
-    .then((response) => response.json())
-    .then((results) => fetchTemplates(results));
+    const { restoreState } = this.props;
+
+    if(this.props.edit) {
+      const id = this.props.id;
+      fetch('/letters/' + id, {
+        method: 'get',
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+      })
+      .then((response) => response.json())
+      .then((results) => restoreState(results));
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -63,8 +67,6 @@ class Form extends Component {
       <div>
         <h1>Build Your Email</h1>
         <SubjectField />
-        <p>Choose a template</p>
-        <TemplatesDropDown template={this.state.template} templates={this.state.templates}/>
         {Editor}
       </div>
     )

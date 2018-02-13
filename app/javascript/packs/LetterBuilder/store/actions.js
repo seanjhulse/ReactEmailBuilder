@@ -1,3 +1,5 @@
+// --------------- MEDIA UPLOADER --------------- //
+// MediaUploader
 export const FETCH_TEMPLATES = 'FETCH_TEMPLATES';
 export const SELECT_TEMPLATE = 'SELECT_TEMPLATE';
 export const CHANGE_SUBJECT  = 'CHANGE_SUBJECT';
@@ -12,9 +14,9 @@ export const CLOSE_DIALOG    = 'CLOSE_DIALOG';
 export function fetchTemplates(templates) {
   return { type: FETCH_TEMPLATES, templates }
 }
-// select template from dropdown
-export function selectTemplate(template) {
-  return { type: SELECT_TEMPLATE, template }
+// select templateId from dropdown
+export function selectTemplate(templateId) {
+  return { type: SELECT_TEMPLATE, templateId }
 }
 // allows users to change subject of email
 export function changeSubject(subject) {
@@ -29,8 +31,8 @@ export function addPicture() {
   return { type: ADD_PICTURE }
 } 
 // delete picture from state in mediaUploader
-export function deletePicture() {
-  return { type: DELETE_PICTURE }
+export function deletePicture(rowKey, columnKey) {
+  return { type: DELETE_PICTURE, rowKey, columnKey }
 } 
 // select picture in Picture
 export function selectPicture(picture) {
@@ -43,4 +45,29 @@ export function openDialog(rowKey, columnKey) {
 // closes MediaUploader Dialog
 export function closeDialog() {
   return { type: CLOSE_DIALOG }
+}
+
+// --------------- TEXT EDITOR --------------- //
+// React Quill Text Editor
+export const UPDATE_TEXT = 'UPDATE_TEXT';
+
+// grabs updates the text inside a single column
+export function updateText(text, rowKey, columnKey) {
+  return { type: UPDATE_TEXT, text, rowKey, columnKey }
+}
+
+
+// --------------- SAVE LETTER --------------- //
+export const SAVE = 'SAVE';
+
+export function save() {
+  return { type: SAVE }
+}
+
+
+// ----------- BRING STATE BACK -------------- //
+export const RESTORE_STATE = 'RESTORE_STATE';
+
+export function restoreState(data) {
+  return { type: RESTORE_STATE, data }
 }

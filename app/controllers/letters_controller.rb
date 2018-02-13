@@ -1,4 +1,5 @@
 class LettersController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_letter, only: [:show, :edit, :update, :destroy]
 
   # GET /letters
@@ -10,6 +11,7 @@ class LettersController < ApplicationController
   # GET /letters/1
   # GET /letters/1.json
   def show
+    render json: @letter
   end
 
   # GET /letters/new
@@ -26,12 +28,12 @@ class LettersController < ApplicationController
   # POST /letters
   # POST /letters.json
   def create
-    @letter = Letter.new(letter_params)
+    @letter = Letter.new(subject: params[:letter][:subject], letter: params[:letter][:template][:template])
 
     respond_to do |format|
       if @letter.save
         format.html { redirect_to @letter, notice: 'Letter was successfully created.' }
-        format.json { render :show, status: :created, location: @letter }
+        format.json { render json: @letter, status: :created, location: @letter }
       else
         format.html { render :new }
         format.json { render json: @letter.errors, status: :unprocessable_entity }
@@ -43,9 +45,9 @@ class LettersController < ApplicationController
   # PATCH/PUT /letters/1.json
   def update
     respond_to do |format|
-      if @letter.update(letter_params)
+      if @letter.update(subject: params[:letter][:subject], letter: params[:letter][:template][:template])
         format.html { redirect_to @letter, notice: 'Letter was successfully updated.' }
-        format.json { render :show, status: :ok, location: @letter }
+        format.json { render json: @letter, status: :ok, location: @letter }
       else
         format.html { render :edit }
         format.json { render json: @letter.errors, status: :unprocessable_entity }
@@ -69,8 +71,7 @@ class LettersController < ApplicationController
       @letter = Letter.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def letter_params
-      params.require(:letter).permit(:subject)
+      params.require(:letter).permit(:subject, :template, :id, :templates, :selectedPicture, :open, :rowKey, :columnKey)
     end
 end

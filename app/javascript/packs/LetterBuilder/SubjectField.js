@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { changeSubject } from './store/actions'
 
 const mapStateToProps = (state) => ({
-  ...state.rows
+  ...state.Reducers.subject
 })
 
 const SubjectField = ({dispatch}) => (
   <form>
-    <label>Subject of the Email</label>
+    <label>Subject</label>
     <input type="text" onChange={(e) => dispatch(changeSubject(e.target.value))} />
   </form>
 )

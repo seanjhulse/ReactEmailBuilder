@@ -5,15 +5,24 @@ import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'm
 import RaisedButton from 'material-ui/RaisedButton'
 import ReactQuill from 'react-quill'
 import { styles } from '../../Styles'
-
+import { updateText } from '../store/actions';
 import MediaUploader from '../MediaUploader/MediaUploader';
 import RemovePicture from '../MediaUploader/RemovePicture';
+import Save from '../Save';
 
 const mapStateToProps = (state) => ({
   ...state.pictures
 })
 
 const SubjectField = ({dispatch, template}) => {
+
+  const SideBar = (
+    <div className="sideBar">
+      <h3>Actions</h3>
+      <Save />
+    </div>
+  );
+
   // iterate over rows
   const form = template.template.rows.map((row) => {
     
@@ -51,7 +60,7 @@ const SubjectField = ({dispatch, template}) => {
         columnDiv = (
           <Card style={style.card}>
             <CardTitle title={column.type} />
-            <ReactQuill theme="snow"/>
+            <ReactQuill theme="snow" onChange={(text) => dispatch(updateText(text, row.key, column.key))}/>
           </Card>
         )
       } 
@@ -64,8 +73,9 @@ const SubjectField = ({dispatch, template}) => {
         const Image = (
           column.image !== undefined && column.image.picture !== undefined ? 
             <div>
-              <RemovePicture />
-              <img src={column.image.picture.url} className="mediaUploaderEmbeddedPicture" />
+              <RemovePicture rowKey={row.key} columnKey={column.key} />
+              <br />
+              <img src={column.image.picture.url} className="mediaUploaderEmbeddedPicture" align="center" />
             </div>
             :
             null
@@ -109,7 +119,14 @@ const SubjectField = ({dispatch, template}) => {
     );
   })
 
-  return form;
+  return (
+    <div className="grid">
+      <div>
+        {form}
+      </div>
+      {SideBar}
+    </div>  
+  );
 }
 
 export default connect(mapStateToProps)(SubjectField);

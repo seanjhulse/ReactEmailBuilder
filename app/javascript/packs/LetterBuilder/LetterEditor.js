@@ -1,23 +1,34 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import Form from './Form/Form';
+import Edit from './Form/Edit';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import LetterApp from './store/reducers';
 
 let store = createStore(LetterApp);
 
-class LetterBuilder extends Component {
+class LetterEditor extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <Provider store={store}>
-        <Form />
+        <Edit 
+          edit={true}
+          id={this.props.id}
+        />
       </Provider>
     )
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const node = document.getElementById('letter_data');
+  const data = JSON.parse(node.getAttribute('data'));
   const container = document.getElementById('main');
-  render(<LetterBuilder />,container);
+  console.log(data);
+  render(<LetterEditor 
+            id={data.id}
+          />,container);
 });

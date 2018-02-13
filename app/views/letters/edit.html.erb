@@ -1,6 +1,5 @@
-<h1>Editing Letter</h1>
-
-<%= render 'form', letter: @letter %>
-
-<%= link_to 'Show', @letter %> |
-<%= link_to 'Back', letters_path %>
+<%= javascript_pack_tag 'LetterBuilder/LetterEditor' %>
+<%= content_tag :div,
+  id: "letter_data",
+  data: @letter.to_json do %>
+<% end %>

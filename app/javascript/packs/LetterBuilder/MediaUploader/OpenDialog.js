@@ -9,7 +9,10 @@ const mapStateToProps = (state) => ({
 
 const OpenDialog = ({dispatch, rowKey, columnKey}) => {
   return (
-    <RaisedButton label="Add or Change Photo" onClick={() => dispatch(openDialog(rowKey, columnKey))} />
+    <RaisedButton 
+      primary={true}
+      label="Add or Change Photo"
+      onClick={() => dispatch(openDialog(rowKey, columnKey))} />
   )
 }
 
