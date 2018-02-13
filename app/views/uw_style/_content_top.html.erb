@@ -1,0 +1,18 @@
+<% unless flash[:notice].blank? and flash[:alert].blank? %>
+  <div class="row">
+    <div class="columns">
+      <% unless flash[:notice].blank? %>
+        <div class="uw-alert uw-alert-success">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% unless flash[:alert].blank? %>
+        <div class="uw-alert uw-alert-warning">
+          <a class="close" data-dismiss="alert" href="#">×</a>
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

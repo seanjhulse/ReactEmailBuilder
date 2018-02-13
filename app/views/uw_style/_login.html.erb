@@ -1,0 +1,18 @@
+<ul class="uw-nav-menu-logged-in">
+  <li>
+    <div class="list-item-like">
+      <a href="<%= uw_style_admin_title_link %>">
+      <% if current_user.respond_to?(:email) %>
+        <span class="logged-in-as">Logged in as:</span> <%= current_user.email %>
+      <% elsif current_user.respond_to?(:username) %>
+        <span class="logged-in-as">Logged in as:</span> <%= current_user.username %>
+      <% else %>
+        Logged In
+      <% end %>
+      </a>
+    </div>
+    <% if respond_to?(:logout_path) %>
+      <%= link_to "Log out #{svg_inline('sign-out')}".html_safe, logout_path, class: 'logout-link' %>
+    <% end %>
+  </li>
+</ul>

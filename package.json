@@ -1,0 +1,25 @@
+{
+  "name": "lighthouse_letters",
+  "private": true,
+  "dependencies": {
+    "@rails/webpacker": "^3.2.1",
+    "coffeescript": "1.12.7",
+    "immutability-helper": "^2.6.4",
+    "immutable": "^3.8.2",
+    "material-ui": "^0.20.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-addons-update": "^15.6.2",
+    "react-ckeditor-component": "^1.0.7",
+    "react-dnd": "^2.5.4",
+    "react-dragula": "^1.1.17",
+    "react-material-icons": "^1.0.3",
+    "react-redux": "^5.0.6",
+    "react-sortable-hoc": "^0.6.8",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "babel-preset-react": "^6.24.1",
+    "webpack-dev-server": "^2.11.1"
+  }
+}

@@ -1,0 +1,24 @@
+.row {
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );
+}
+
+.deleteRowButton {
+  float: right;
+  margin-top: 0rem;
+  margin-left: -10rem;
+  z-index: 2;
+}
+
+.dragHandle {
+  padding-right: 100%;
+  cursor:move; 
+  cursor:-webkit-grab; 
+  cursor:-moz-grab; 
+  cursor:grab;
+  &:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+  }
+}

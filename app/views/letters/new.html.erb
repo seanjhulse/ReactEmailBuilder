@@ -1,0 +1,5 @@
+<%= javascript_pack_tag 'LetterBuilder/LetterBuilder' %>
+<%= content_tag :div,
+  id: "templates_data",
+  data: @templates.to_json do %>
+<% end %>
