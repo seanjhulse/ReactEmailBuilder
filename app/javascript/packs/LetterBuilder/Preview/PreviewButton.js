@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { save } from './store/actions'
+import { preview } from '../store/actions'
 import RaisedButton from 'material-ui/RaisedButton'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -8,12 +8,13 @@ const mapStateToProps = (state) => ({
   ...state.template
 })
 
-const Save = ({dispatch}) => (
+const PreviewButton = ({dispatch}) => (
   <MuiThemeProvider>
     <RaisedButton 
-      label="Save"
-      onClick={() => dispatch(save())}  
+      label="Preview"
+      onClick={() => dispatch(preview())}  
     />
-  </MuiThemeProvider>)
+  </MuiThemeProvider>
+)
 
-export default connect(mapStateToProps)(Save);
+export default connect(mapStateToProps)(PreviewButton);

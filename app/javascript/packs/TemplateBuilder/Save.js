@@ -7,7 +7,7 @@ const mapStateToProps = (state) => ({
 })
 
 const SaveTemplate = ({dispatch}) => (
-  <button className='uw-button' onClick={() => dispatch(saveTemplate(this.state))}>Save Template</button>
+  <button className='uw-button' onClick={() => dispatch(saveTemplate())}>Save Template</button>
 )
 
 export default connect(mapStateToProps)(SaveTemplate);

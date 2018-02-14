@@ -14,6 +14,7 @@ const updateColumnDropDown = ({dispatch, row, column, style}) => (
     <MenuItem value={"Header"} primaryText="Header" />
     <MenuItem value={"Text"} primaryText="Textbox" />
     <MenuItem value={"Image"} primaryText="Image" />
+    <MenuItem value={"Image_With_Text"} primaryText="Image with Text" />
     <MenuItem value={"Footer"} primaryText="Footer" />
   </DropDownMenu>
 )

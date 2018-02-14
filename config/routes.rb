@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :templates
   resources :letters
 
+  # MediaUploader actions for AWS bucket
   post 'upload_image' => 'media#upload_image'
   get  'get_images' => 'media#get_images'
+
 end

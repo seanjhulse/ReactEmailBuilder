@@ -11,11 +11,14 @@ import {
   UPDATE_TEXT,
 
   SAVE,
+  PREVIEW,
 
   RESTORE_STATE,
-} from './actions';
+} from './actions'
 import { combineReducers } from 'redux'
-import update from 'immutability-helper';
+import update from 'immutability-helper'
+import { mjml2html } from 'mjml'
+import { previewEmail } from '../Preview/PreviewEmail';
 
 const initialState = {
   id: undefined,
@@ -25,7 +28,7 @@ const initialState = {
   selectedPicture: {},
   open: false,
   rowKey: '',
-  columnKey: ''
+  columnKey: '',
 }
 
 function Reducers(state = initialState, action) {
@@ -167,17 +170,14 @@ function Reducers(state = initialState, action) {
           console.log(result);
           return 'Error';
         }
-      })
-      .then((response) => {
-        if(response !== 'Error') {
-          const URL = '/';
-          window.location.href = URL;
-        }
       });
 
+    case PREVIEW:
+      previewEmail(state.template);
+
     case RESTORE_STATE:
-      const temp = action.data;
-      console.log(temp);
+      var temp = action.data;
+
       if(temp !== undefined) {
         return Object.assign({}, state, { 
           id: temp.id,
@@ -200,5 +200,6 @@ function Reducers(state = initialState, action) {
 const LetterApp = combineReducers({
   Reducers,
 });
+
 
 export default LetterApp;

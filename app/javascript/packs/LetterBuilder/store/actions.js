@@ -57,13 +57,17 @@ export function updateText(text, rowKey, columnKey) {
 }
 
 
-// --------------- SAVE LETTER --------------- //
+// --------- SAVE & PREVIEW LETTER ---------- //
 export const SAVE = 'SAVE';
+export const PREVIEW = 'PREVIEW';
 
+// saves the letter as JSON object
 export function save() {
   return { type: SAVE }
 }
-
+export function preview() {
+  return { type: PREVIEW }
+}
 
 // ----------- BRING STATE BACK -------------- //
 export const RESTORE_STATE = 'RESTORE_STATE';

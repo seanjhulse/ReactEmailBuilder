@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('letter_data');
   const data = JSON.parse(node.getAttribute('data'));
   const container = document.getElementById('main');
-  console.log(data);
+
   render(<LetterEditor 
             id={data.id}
           />,container);

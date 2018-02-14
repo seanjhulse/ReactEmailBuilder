@@ -10,7 +10,8 @@ function mapStateToProps(state) {
     subject: state.Reducers.subject,
     template: state.Reducers.template,
     templates: state.Reducers.templates,
-    selectedPictures: state.Reducers.selectedPictures
+    selectedPictures: state.Reducers.selectedPictures,
+    preview: state.Reducers.preview
   }
 }
 
@@ -20,7 +21,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-class Form extends Component {
+class Edit extends Component {
   constructor(props) {
     super(props);
 
@@ -29,6 +30,7 @@ class Form extends Component {
       template: -1,
       templates: [],
       selectedPictures: [],
+      preview: false,
     }
   }
 
@@ -54,23 +56,23 @@ class Form extends Component {
       subject: props.subject,
       template: props.template,
       templates: props.templates,
-      selectedPictures: props.selectedPictures
+      selectedPictures: props.selectedPictures,
+      preview: props.preview
     })
   }
 
   render() {
     const { template, pictures } = this.state;
-
     const Editor = template !== -1 ? <FormBuilder template={template} /> : null;
 
     return (
       <div>
         <h1>Build Your Email</h1>
-        <SubjectField />
+        <SubjectField subject={this.state.subject}/>
         {Editor}
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Form);
+export default connect(mapStateToProps,mapDispatchToProps)(Edit);

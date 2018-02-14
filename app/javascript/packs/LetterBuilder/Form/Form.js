@@ -10,7 +10,7 @@ function mapStateToProps(state) {
     subject: state.Reducers.subject,
     template: state.Reducers.template,
     templates: state.Reducers.templates,
-    selectedPictures: state.Reducers.selectedPictures
+    selectedPictures: state.Reducers.selectedPictures,
   }
 }
 
@@ -50,7 +50,8 @@ class Form extends Component {
       subject: props.subject,
       template: props.template,
       templates: props.templates,
-      selectedPictures: props.selectedPictures
+      selectedPictures: props.selectedPictures,
+      preview: props.preview
     })
   }
 
@@ -58,10 +59,9 @@ class Form extends Component {
     const { template, pictures } = this.state;
 
     const Editor = template !== -1 ? <FormBuilder template={template} /> : null;
-
     return (
       <div>
-        <h1>Build Your Email</h1>
+        <h1>Build Your Letter</h1>
         <SubjectField />
         <p>Choose a template</p>
         <TemplatesDropDown template={this.state.template} templates={this.state.templates}/>

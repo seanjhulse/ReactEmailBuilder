@@ -2,3 +2,8 @@
   background-color: #0000000f;
   padding: 1rem;
 }
+.buttonGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+}

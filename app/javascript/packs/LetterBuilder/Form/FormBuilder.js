@@ -9,17 +9,21 @@ import { updateText } from '../store/actions';
 import MediaUploader from '../MediaUploader/MediaUploader';
 import RemovePicture from '../MediaUploader/RemovePicture';
 import Save from '../Save';
+import PreviewButton from '../Preview/PreviewButton';
 
 const mapStateToProps = (state) => ({
   ...state.pictures
 })
 
-const SubjectField = ({dispatch, template}) => {
+const FormBuilder = ({dispatch, template}) => {
 
   const SideBar = (
     <div className="sideBar">
       <h3>Actions</h3>
-      <Save />
+        <div className="buttonGrid">
+          <Save />
+          <PreviewButton />
+        </div>
     </div>
   );
 
@@ -57,10 +61,15 @@ const SubjectField = ({dispatch, template}) => {
       else if(column.type === 'Text') {
         var style=styles.text;
         style.card.padding = '1rem';
+        var textValue = '';
+        if(column.text !== undefined) {
+          textValue = column.text;
+        }
+
         columnDiv = (
           <Card style={style.card}>
             <CardTitle title={column.type} />
-            <ReactQuill theme="snow" onChange={(text) => dispatch(updateText(text, row.key, column.key))}/>
+            <ReactQuill theme="snow" value={textValue} onChange={(text) => dispatch(updateText(text, row.key, column.key))}/>
           </Card>
         )
       } 
@@ -90,6 +99,35 @@ const SubjectField = ({dispatch, template}) => {
         )
       }
 
+      // TEXT
+      else if(column.type === 'Image_With_Text') {
+        var style=styles.text;
+        style.card.padding = '1rem';
+        var textValue = '';
+        if(column.text !== undefined) {
+          textValue = column.text;
+        }
+        const Image = (
+          column.image !== undefined && column.image.picture !== undefined ? 
+            <div>
+              <RemovePicture rowKey={row.key} columnKey={column.key} />
+              <br />
+              <img src={column.image.picture.url} className="mediaUploaderEmbeddedPicture" align="center" />
+            </div>
+            :
+            null
+        )
+        columnDiv = (
+          <Card style={style.card}>
+            <CardTitle title={column.type} />
+            <MediaUploader rowKey={row.key} columnKey={column.key} />
+            {Image}
+            <br />
+            <ReactQuill theme="snow" value={textValue} onChange={(text) => dispatch(updateText(text, row.key, column.key))}/>
+          </Card>
+        )
+
+      } 
       // FOOTER
       else if(column.type === 'Footer') {
         var style=styles.footer;
@@ -129,4 +167,4 @@ const SubjectField = ({dispatch, template}) => {
   );
 }
 
-export default connect(mapStateToProps)(SubjectField);
+export default connect(mapStateToProps)(FormBuilder);

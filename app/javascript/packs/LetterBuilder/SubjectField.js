@@ -6,11 +6,14 @@ const mapStateToProps = (state) => ({
   ...state.Reducers.subject
 })
 
-const SubjectField = ({dispatch}) => (
-  <form>
-    <label>Subject</label>
-    <input type="text" onChange={(e) => dispatch(changeSubject(e.target.value))} />
-  </form>
-)
+const SubjectField = ({dispatch, subject}) => {
+
+  return (
+    <form>
+      <label>Subject</label>
+      <input type="text" value={subject} onChange={(e) => dispatch(changeSubject(e.target.value))} />
+    </form>
+  )
+}
 
 export default connect(mapStateToProps)(SubjectField);
