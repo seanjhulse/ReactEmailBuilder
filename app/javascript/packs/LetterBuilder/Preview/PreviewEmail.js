@@ -1,98 +1,124 @@
-import { mjml2html } from 'mjml'
-
 function previewEmail(template) {
     // iterate over rows
-  const preview = template.template.rows.map((row) => {
-    
-    // iterate over columns
-    const r_row = row.columns.map((column) => {
-      
-      // create column divs by Type
-      var columnDiv = null;
-      
-      // HEADER
-      if(column.type === 'Header') {
 
-        columnDiv = (
-          `<mj-hero
-            mode="fluid-height"
-            background-width="600px"
-            background-height="200px"
-            background-url="${column.image !== undefined ? column.image.picture.url : null}"
-            background-color="#2a3448">
-          </mj-hero>`
-        )
-      }
+  // var header;
 
-      // TEXT
-      else if(column.type === 'Text') {
-        var textValue = '';
-        if(column.text !== undefined) {
-          textValue = column.text;
-        }
-        columnDiv = (
-          `<mj-text>${textValue}</mj-text>`
-        )
-      } 
-
-      // IMAGE
-      else if(column.type === 'Image') {
-        columnDiv = (
-          `<mj-image src="${column.image !== undefined ? column.image.picture.url : null}" ></mj-image>`
-        )
-      }
-
-      // IMAGE WITH TEXT
-      else if(column.type === 'Image_With_Text') {
-        columnDiv = (
-          `<mj-image src="${column.image !== undefined ? column.image.picture.url : null}" ></mj-image>
-           <mj-text>${column.text}</mj-text>`
-        )
-      }
-
-      // FOOTER
-      else if(column.type === 'Footer') {
-        columnDiv = (
-          `<mj-section background-color="#282728">Footer</mj-section>`
-        )
-      }
-
-      // return the column with the right type
-      return (
-        `<mj-column>
-          ${columnDiv}
-        </mj-column>`
-      )
-    })
-
-    // return the row with the columns
-    return (
-      `<mj-section>
-        ${r_row}
-      </mj-section>`
-    );
-  })
-
-  // tack on the extra info into an interpolated string
-  var htmlStr =   `
-  <mjml>
-    <mj-body>
-      <mj-container>`;
-
-  for(var i = 0; i < preview.length; i++) {
-    htmlStr += preview[i];
-  }
-
-  htmlStr += `
-      </mj-container>
-    </mj-body>
-  </mjml>`;
-
-  console.log(htmlStr);
-  // convert string to html
-  const htmlOutput = mjml2html(htmlStr);
+  // const preview = template.template.rows.map((row) => {
   
-  window.open(document.URL, '_blank', 'scrollbars=yes,status=yes').document.write(htmlOutput.html);
+  //   // iterate over columns
+  //   const r_row = row.columns.map((column) => {
+      
+  //     // create column divs by Type
+  //     var columnDiv;
+      
+  //     // HEADER
+  //     if(column.type === 'Header') {
+
+  //       if(column.image !== undefined) {
+  //         header = (
+  //           `<container background=${column.image.picture.url} style="margin-bottom: 2rem">
+  //               <row>
+  //                 <columns>
+  //                   <h1 style="color: #333; textShadow: 'white 0px 0px 30px'; text-align: center">University of Wisconsin</h1>
+  //                   <p style="color: #333; textShadow: 'white 0px 0px 30px'; text-align: center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore laboriosam beatae expedita, saepe sequi placeat nemo ipsam voluptatum eveniet aspernatur nihil odit nobis illo commodi neque. Quae accusamus suscipit doloribus.</p>
+  //                 </columns>
+  //               </row>
+  //             </container>`
+  //         )
+  //       } else {
+  //         header = (
+  //           `<wrapper style="background-color: #C5050B; margin-bottom: 2rem;">
+  //             <h1 style="color: white; text-align: center">University of Wisconsin – Madison</h1>
+  //           </wrapper>`
+  //         )
+  //       }
+        
+  //     }
+
+  //     // TEXT
+  //     else if(column.type === 'Text') {
+  //       var textValue = '';
+  //       if(column.text !== undefined) {
+  //         textValue = column.text;
+  //       }
+  //       columnDiv = (
+  //         `<p>${textValue}</p>`
+  //       )
+  //     } 
+
+  //     // IMAGE
+  //     else if(column.type === 'Image') {
+  //       columnDiv = (
+  //         `<img alt="test" width="100" src=${column.image !== undefined ? column.image.picture.url : null} />`
+  //       )
+  //     }
+
+  //     // IMAGE WITH TEXT
+  //     else if(column.type === 'Image_With_Text') {
+  //       columnDiv = (
+  //         `
+  //           <img alt="test" width="100" src=${column.image !== undefined ? column.image.picture.url : null} />
+  //           <p>${column.text}</p>
+  //         `
+  //       )
+  //     }
+
+  //     // FOOTER
+  //     else if(column.type === 'Footer') {
+  //       columnDiv = (
+  //         `<p>Footer</p>`
+  //       )
+  //     }
+  //     // return the column with the right type
+  //     if(columnDiv !== undefined) {
+  //       return (
+  //         `<columns large=${row.columns.length}>
+  //           ${columnDiv}
+  //         </columns>`
+  //       )
+  //     } else {
+  //       return;
+  //     }
+
+  //   })
+
+  //   // return the row with the columns
+  //   return (`
+  //     <row>
+  //       ${r_row.join('')}
+  //     </row>
+  //   `);
+  // })
+
+  // // tack on the extra info into an interpolated string
+  // var email = (
+  //   `<container>
+  //     ${header}
+  //     ${preview.join('')}
+  //   </container>`
+  // );
+
+
+  // console.log(email);
+
+  fetch('/test_email', {
+    method: 'post',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({'letter': template})
+  })
+  // send email to mailer
+  // fetch('/test_email', {
+  //   method: 'post',
+  //   headers: {
+  //     "Accept": "application/json",
+  //     "Content-Type": "application/json"
+  //     },
+  //   body: JSON.stringify({'email': email})
+  // })
+
 };
 
 export { previewEmail };

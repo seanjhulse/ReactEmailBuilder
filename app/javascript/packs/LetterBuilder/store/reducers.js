@@ -17,7 +17,6 @@ import {
 } from './actions'
 import { combineReducers } from 'redux'
 import update from 'immutability-helper'
-import { mjml2html } from 'mjml'
 import { previewEmail } from '../Preview/PreviewEmail';
 
 const initialState = {
@@ -121,7 +120,6 @@ function Reducers(state = initialState, action) {
       })
 
     case UPDATE_TEXT:
-      console.log(state);
       // get keys
       var rowKey = action.rowKey;
       var columnKey = action.columnKey;
@@ -171,6 +169,8 @@ function Reducers(state = initialState, action) {
           return 'Error';
         }
       });
+
+      return state; 
 
     case PREVIEW:
       previewEmail(state.template);

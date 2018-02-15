@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   post 'upload_image' => 'media#upload_image'
   get  'get_images' => 'media#get_images'
 
+  post 'test_email' => 'letters#test_email'
 end

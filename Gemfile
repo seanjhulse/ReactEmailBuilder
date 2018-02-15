@@ -38,7 +38,9 @@ gem 'carrierwave', '~> 1.0'
 gem 'fog'
 gem 'uw_style', :git => 'git@git.doit.wisc.edu:UMark/uw_style-rails.git'
 gem 'webpacker'
-
+gem 'inky-rb', require: 'inky'
+# Stylesheet inlining for email **
+gem 'premailer-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,0 +1,49 @@
+<container>
+
+  <wrapper style="margin: .5rem;">
+    <p style="color: #444; text-align: center">Trouble viewing this email?</h1>
+  </wrapper>
+
+  <% @letter.template['rows'].each do |row| %>
+    <row>
+    <% row['columns'].each do |column| %>
+      <columns small=<%= row['columns'].length %> >
+
+        <!-- HEADER -->
+        <% if column['type'] == 'Header' %>
+          <hr/>
+
+          <% if column['image'].present?  %>
+            <container background=<%= column['image']['picture']['url'] %> style="margin-bottom: 1rem; min-height: 150px;"></container>
+          <% else %>
+            <wrapper style="background-color: #C5050B; margin-bottom: 2rem;">
+              <h1 style="color: white; text-align: center">University of Wisconsin – Madison</h1>
+            </wrapper>
+          <% end %>
+          <hr/>
+        <!-- TEXT -->
+        <% elsif column['type'] == 'Text' %>
+          <span class="regular-text"><%= raw(column['text']) %></span>
+
+        <!-- IMAGE -->
+        <% elsif column['type'] == 'Image' %>
+          <img alt="test" height="200" src=<%= column['image'] != 'undefined' ? column['image']['picture']['url'] : nil %> />
+
+        <!-- IMAGE WITH TEXT -->
+        <% elsif column['type'] == 'Image_With_Text' %>
+          <img alt="test" height="200" src=<%= column['image'] != 'undefined' ? column['image']['picture']['url'] : nil %> />
+          <span class="regular-text"><%= raw(column['text']) %></span>
+        
+        <!-- FOOTER -->
+        <% elsif column['type'] == 'Footer' %>
+            <wrapper style="background-color: #25252; margin-bottom: 2rem;">
+              <h5 style="color: white; text-align: center">University of Wisconsin – Madison</h5>
+              <p style="color: white; text-align: center">Blah blah blah blah</p>
+            </wrapper>
+        <% end %>
+
+      </columns>
+    <% end %>
+    </row>
+  <% end %>
+</container>

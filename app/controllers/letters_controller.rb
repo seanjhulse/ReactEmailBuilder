@@ -55,6 +55,12 @@ class LettersController < ApplicationController
     end
   end
 
+  def test_email
+    @letter = OpenStruct.new(params[:letter])
+    @mail = LetterMailer.test(@letter).deliver!
+    Premailer::Rails::Hook.perform(@mail)
+  end
+
   # DELETE /letters/1
   # DELETE /letters/1.json
   def destroy
