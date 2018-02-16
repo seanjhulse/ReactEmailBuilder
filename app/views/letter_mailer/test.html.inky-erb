@@ -1,6 +1,6 @@
 <container>
 
-  <wrapper style="margin: .5rem;">
+  <wrapper>
     <p style="color: #444; text-align: center">Trouble viewing this email?</h1>
   </wrapper>
 
@@ -27,7 +27,7 @@
 
         <!-- IMAGE -->
         <% elsif column['type'] == 'Image' %>
-          <img alt="test" height="200" src=<%= column['image'] != 'undefined' ? column['image']['picture']['url'] : nil %> />
+          <img alt="test" src=<%= column['image'] != 'undefined' ? column['image']['picture']['url'] : nil %> />
 
         <!-- IMAGE WITH TEXT -->
         <% elsif column['type'] == 'Image_With_Text' %>
@@ -36,9 +36,11 @@
         
         <!-- FOOTER -->
         <% elsif column['type'] == 'Footer' %>
-            <wrapper style="background-color: #25252; margin-bottom: 2rem;">
-              <h5 style="color: white; text-align: center">University of Wisconsin – Madison</h5>
-              <p style="color: white; text-align: center">Blah blah blah blah</p>
+            <wrapper>
+              <div class="footer">
+                <h5 style="color: white; text-align: center">University of Wisconsin – Madison</h5>
+                <p style="color: white; text-align: center">Blah blah blah blah</p>
+              </div>
             </wrapper>
         <% end %>
 

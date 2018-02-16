@@ -46,6 +46,7 @@ module UwStyleHelper
 
   def uw_style_css 
     stylesheet_link_tag 'uw_style/uw_style', :media => "all"
+    stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons', :media => "all"
     stylesheet_link_tag 'application', :media => "all"
   end
 

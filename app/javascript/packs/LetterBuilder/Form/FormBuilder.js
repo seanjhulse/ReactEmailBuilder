@@ -10,6 +10,7 @@ import MediaUploader from '../MediaUploader/MediaUploader';
 import RemovePicture from '../MediaUploader/RemovePicture';
 import Save from '../Save';
 import PreviewButton from '../Preview/PreviewButton';
+import OpenDialog from '../MediaUploader/OpenDialog';
 
 const mapStateToProps = (state) => ({
   ...state.pictures
@@ -35,7 +36,7 @@ const FormBuilder = ({dispatch, template}) => {
       
       // create column divs by Type
       var columnDiv = null;
-      
+
       // HEADER
       if(column.type === 'Header') {
         var style=styles.header;
@@ -52,6 +53,7 @@ const FormBuilder = ({dispatch, template}) => {
         columnDiv = (
           <Card style={style.card}>
             <CardTitle title={column.type} titleStyle={style.title} />
+            <OpenDialog rowKey={row.key} columnKey={column.key} />
             <MediaUploader rowKey={row.key} columnKey={column.key} />
           </Card>
         )
@@ -60,7 +62,7 @@ const FormBuilder = ({dispatch, template}) => {
       // TEXT
       else if(column.type === 'Text') {
         var style=styles.text;
-        style.card.padding = '1rem';
+        style.card.padding = '0 .5rem';
         var textValue = '';
         if(column.text !== undefined) {
           textValue = column.text;
@@ -68,8 +70,9 @@ const FormBuilder = ({dispatch, template}) => {
 
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type} />
+            <CardTitle title={column.type} titleStyle={style.title} />
             <ReactQuill theme="snow" value={textValue} onChange={(text) => dispatch(updateText(text, row.key, column.key))}/>
+            <br />
           </Card>
         )
       } 
@@ -77,14 +80,12 @@ const FormBuilder = ({dispatch, template}) => {
       // IMAGE
       else if(column.type === 'Image') {
         var style=styles.image;
-        style.card.padding = '1rem';
+        style.card.padding = '0 .5rem';
 
         const Image = (
           column.image !== undefined && column.image.picture !== undefined ? 
-            <div>
-              <RemovePicture rowKey={row.key} columnKey={column.key} />
-              <br />
-              <img src={column.image.picture.url} className="mediaUploaderEmbeddedPicture" align="center" />
+            <div className="mediaUploaderEmbeddedPicture">
+              <img src={column.image.picture.url} align="center" />
             </div>
             :
             null
@@ -92,38 +93,45 @@ const FormBuilder = ({dispatch, template}) => {
         
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type} />
-            <MediaUploader rowKey={row.key} columnKey={column.key} />
+            <CardTitle title={column.type} titleStyle={style.title} />
+            <CardActions className="cardActions">
+              <OpenDialog rowKey={row.key} columnKey={column.key} />
+              <RemovePicture rowKey={row.key} columnKey={column.key} />
+            </CardActions>
             {Image}
+            <br />
           </Card>
         )
       }
 
-      // TEXT
+      // IMAGE_WITH_TEXT
       else if(column.type === 'Image_With_Text') {
         var style=styles.text;
-        style.card.padding = '1rem';
+        style.card.padding = '.5rem';
         var textValue = '';
         if(column.text !== undefined) {
           textValue = column.text;
         }
         const Image = (
           column.image !== undefined && column.image.picture !== undefined ? 
-            <div>
-              <RemovePicture rowKey={row.key} columnKey={column.key} />
+            <div className="mediaUploaderEmbeddedPicture">
               <br />
-              <img src={column.image.picture.url} className="mediaUploaderEmbeddedPicture" align="center" />
+              <img src={column.image.picture.url} align="center" />
             </div>
             :
             null
         )
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type} />
-            <MediaUploader rowKey={row.key} columnKey={column.key} />
+            <CardTitle title={column.type.split('_').join(' ')} titleStyle={style.title}/>
+            <CardActions className="cardActions">
+              <OpenDialog rowKey={row.key} columnKey={column.key} />
+              <RemovePicture rowKey={row.key} columnKey={column.key} />
+            </CardActions>
             {Image}
             <br />
             <ReactQuill theme="snow" value={textValue} onChange={(text) => dispatch(updateText(text, row.key, column.key))}/>
+            <br />
           </Card>
         )
 
@@ -161,6 +169,7 @@ const FormBuilder = ({dispatch, template}) => {
     <div className="grid">
       <div>
         {form}
+        <MediaUploader />
       </div>
       {SideBar}
     </div>  

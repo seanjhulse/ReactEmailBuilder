@@ -4,7 +4,7 @@ import {
   SortableElement, 
 } from 'react-sortable-hoc';
 import { connect } from 'react-redux';
-
+import { Card } from 'material-ui/Card';
 import AddRowButtons from './rows/AddRowButtons';
 import SortRows from './rows/SortRows';
 import SaveTemplate from './Save';
@@ -33,11 +33,11 @@ class Template extends Component {
 
   render() {
     const SideBar = (
-      <div className="sideBar">
+      <Card className="sideBar">
         <h3>Add a Row</h3>
         <AddRowButtons />
         <SaveTemplate />
-      </div>
+      </Card>
     );
 
     const Rows = (

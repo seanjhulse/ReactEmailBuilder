@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { restoreState } from '../store/actions';
 import TemplatesDropDown from '../TemplatesDropDown';
-import SubjectField from '../SubjectField';
+import EmailFields from '../EmailFields';
 import FormBuilder from './FormBuilder';
 
 function mapStateToProps(state) {
@@ -68,7 +68,7 @@ class Edit extends Component {
     return (
       <div>
         <h1>Build Your Email</h1>
-        <SubjectField subject={this.state.subject}/>
+        <EmailFields subject={this.state.subject}/>
         {Editor}
       </div>
     )

@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deletePicture } from '../store/actions'
-import RaisedButton from 'material-ui/RaisedButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import { styles } from '../../Styles'
 
 const mapStateToProps = (state) => ({
   ...state.selectedPicture
@@ -9,13 +10,15 @@ const mapStateToProps = (state) => ({
 
 const RemovePicture = ({dispatch, rowKey, columnKey}) => {
   return (
-    <RaisedButton
+    <FloatingActionButton
       key="RemovePhotoFromColumn"
-      label="Remove"
-      secondary={true}
       className="removePhotoButton"
+      backgroundColor={styles.RaisedButton.removeImage.backgroundColor}
+      mini={true}
       onClick={() => { dispatch(deletePicture(rowKey, columnKey)) } }
-    />
+    >
+      <i className="mi md-dark material-icons">delete_forever</i>
+    </FloatingActionButton>
   )
 }
 

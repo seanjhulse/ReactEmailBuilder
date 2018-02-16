@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import MediaFormActions from './MediaFormActions';
 import Picture from './Picture';
-import OpenDialog from './OpenDialog';
 
 function mapStateToProps(state) {
   return {
@@ -83,13 +83,9 @@ class MediaUploader extends Component {
     const {displayPictures, selectedPicture} = this.state;
     const actions = <MediaFormActions />;
     return (
-      <div>
-        <OpenDialog
-          rowKey={this.props.rowKey}
-          columnKey={this.props.columnKey}
-        />
+      <MuiThemeProvider>
         <Dialog
-          title="Pick an Image or Upload One"
+          title="Pick an Image"
           actions={actions}
           modal={false}
           open={this.state.open}
@@ -131,7 +127,7 @@ class MediaUploader extends Component {
             }
           </ul>
         </Dialog>
-      </div>
+      </MuiThemeProvider>
     )
   }
 }

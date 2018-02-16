@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchTemplates } from '../store/actions';
 import TemplatesDropDown from '../TemplatesDropDown';
-import SubjectField from '../SubjectField';
+import EmailFields from '../EmailFields';
 import FormBuilder from './FormBuilder';
 
 function mapStateToProps(state) {
@@ -62,7 +62,7 @@ class Form extends Component {
     return (
       <div>
         <h1>Build Your Letter</h1>
-        <SubjectField />
+        <EmailFields />
         <p>Choose a template</p>
         <TemplatesDropDown template={this.state.template} templates={this.state.templates}/>
         {Editor}

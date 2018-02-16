@@ -4,6 +4,6 @@ class LetterMailer < ApplicationMailer
   def test(letter)
     p letter
     @letter = letter
-    mail(to: 'sjhulse@wisc.edu', subject: 'Inky and React')
+    mail(to: 'seanjhulse@gmail.com', subject: 'Inky and React')
   end
 end
