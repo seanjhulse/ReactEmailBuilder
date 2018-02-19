@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { openDialog } from '../store/actions'
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import { styles } from '../../Styles'
 
 const mapStateToProps = (state) => ({
@@ -10,12 +10,11 @@ const mapStateToProps = (state) => ({
 
 const OpenDialog = ({dispatch, rowKey, columnKey}) => {
   return (
-    <FloatingActionButton 
+    <RaisedButton 
       onClick={() => dispatch(openDialog(rowKey, columnKey))} 
-      mini={true}      
     >
       <i className="mi md-dark md-24 material-icons">add_a_photo</i>
-    </FloatingActionButton>
+    </RaisedButton>
   )
 }
 

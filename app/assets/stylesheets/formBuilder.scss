@@ -1,0 +1,13 @@
+.subtitleFont {
+  color: rgba(0, 0, 0, 0.54); 
+  display: block; 
+  font-size: 14px;
+  margin-left: 1rem;
+  margin-top: -.5rem;
+}
+
+.cardActions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 0fr));
+  grid-gap: .5rem;
+}

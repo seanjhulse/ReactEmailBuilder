@@ -28,12 +28,12 @@ class LettersController < ApplicationController
   # POST /letters
   # POST /letters.json
   def create
-    @letter = Letter.new(subject: params[:letter][:subject], letter: params[:letter][:template][:template])
+    @letter = Letter.new(subject: params[:letter][:subject], to_address: params[:letter][:to_address], from_address: params[:letter][:from_address], preview_address: params[:letter][:preview_address], letter: params[:letter][:template][:template])
 
     respond_to do |format|
       if @letter.save
-        format.html { redirect_to @letter, notice: 'Letter was successfully created.' }
-        format.json { render json: @letter, status: :created, location: @letter }
+        format.json { render json: @letter.to_json, status: 301 }
+        format.html { redirect_to :action => "edit" }
       else
         format.html { render :new }
         format.json { render json: @letter.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class LettersController < ApplicationController
   # PATCH/PUT /letters/1.json
   def update
     respond_to do |format|
-      if @letter.update(subject: params[:letter][:subject], letter: params[:letter][:template][:template])
+      if @letter.update(subject: params[:letter][:subject], to_address: params[:letter][:to_address], from_address: params[:letter][:from_address], preview_address: params[:letter][:preview_address], letter: params[:letter][:template][:template])
         format.html { redirect_to @letter, notice: 'Letter was successfully updated.' }
         format.json { render json: @letter, status: :ok, location: @letter }
       else
@@ -57,7 +57,10 @@ class LettersController < ApplicationController
 
   def test_email
     @letter = OpenStruct.new(params[:letter])
-    @mail = LetterMailer.test(@letter).deliver!
+    @preview_addresses = @letter['preview_address'].split(',')
+    @preview_addresses.each do |preview_address|
+      @mail = LetterMailer.test(@letter, preview_address).deliver!
+    end
     Premailer::Rails::Hook.perform(@mail)
   end
 
@@ -66,7 +69,7 @@ class LettersController < ApplicationController
   def destroy
     @letter.destroy
     respond_to do |format|
-      format.html { redirect_to letters_url, notice: 'Letter was successfully destroyed.' }
+      format.html { redirect_to letters_url }
       format.json { head :no_content }
     end
   end
@@ -78,6 +81,6 @@ class LettersController < ApplicationController
     end
 
     def letter_params
-      params.require(:letter).permit(:subject, :template, :id, :templates, :selectedPicture, :open, :rowKey, :columnKey)
+      params.require(:letter).permit(:subject, :to_address, :from_address, :preview_address, :template, :id, :templates, :selectedPicture, :open, :rowKey, :columnKey)
     end
 end

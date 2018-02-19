@@ -1,5 +1,4 @@
 import React from 'react'
-import Picture from './Picture'
 import { connect } from 'react-redux'
 import { addPicture, closeDialog } from '../store/actions'
 import FlatButton from 'material-ui/FlatButton';
@@ -20,7 +19,6 @@ const MediaFormActions = ({dispatch}) => {
         key="CloseDialogAndSavePicture"
         label="Submit"
         primary={true}
-        keyboardFocused={true}
         onClick={() => {dispatch(addPicture()); dispatch(closeDialog()) } }
       />,
     ];

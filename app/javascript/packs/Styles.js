@@ -9,6 +9,10 @@ const styles = {
       color: 'white',
       textShadow: 'black 0px 0px 30px',
     },
+    subtitle: {
+      color: 'white',
+      textShadow: 'black 0px 0px 30px',
+    },
     dropDown: {
       color: 'white',
       textShadow: 'black 0px 0px 30px'
@@ -17,7 +21,7 @@ const styles = {
   text: {
     card: {
       minHeight: '100%',
-      borderTop: '25px solid #3f51b5',
+      borderTop: '10px solid #3f51b5',
     },
     title: {
       fontSize: 'large',
@@ -27,7 +31,7 @@ const styles = {
   image: {
     card: {
       minHeight: '100%',
-      borderTop: '25px solid rgb(0, 206, 123)',
+      borderTop: '10px solid rgb(0, 206, 123)',
     },
     title: {
       fontSize: 'large',
@@ -42,6 +46,10 @@ const styles = {
     },
     title: {
       color: 'white',
+    },
+    subtitle: {
+      color: 'white',
+      textShadow: 'black 0px 0px 30px',
     },
     dropDown: {
       color: 'white',

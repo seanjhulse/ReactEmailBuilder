@@ -1,13 +1,13 @@
 .row {
   display: grid;
   grid-template-columns: repeat( auto-fit, minmax(150px, 1fr) );
+  margin-top: 1rem;
 }
 
 .deleteRowButton {
-  float: right;
-  margin-top: 0rem;
-  margin-left: -10rem;
-  z-index: 2;
+  position: absolute !important;
+  z-index: 10;
+  color: #ca0505 !important;
 }
 
 .dragHandle {

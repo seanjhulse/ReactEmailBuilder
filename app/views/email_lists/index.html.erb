@@ -1,0 +1,8 @@
+<div class="email-lists-grid">
+  <% @email_lists.each do |list| %>
+    <div id="list-<%=list.id%>">
+      <%= button_to('Delete', picture_path(list), remote: true, method: :delete) %>
+      <%= list.name %>
+    </div>
+  <% end %>
+</div>

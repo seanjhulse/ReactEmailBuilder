@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addRow } from '../store/actions'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const mapStateToProps = (state) => ({
   ...state.rows
@@ -8,9 +9,18 @@ const mapStateToProps = (state) => ({
 
 const AddRowButtons = ({dispatch}) => (
   <div>
-    <button className="uw-button" onClick={() => dispatch(addRow(1))}>1 - Column</button><br/><br/>
-    <button className="uw-button" onClick={() => dispatch(addRow(2))}>2 - Column</button><br/><br/>
-    <button className="uw-button" onClick={() => dispatch(addRow(3))}>3 - Column</button><br/><br/>
+    <RaisedButton 
+      primary={true} 
+      label="1 x 1 Row"
+      onClick={() => dispatch(addRow(1))} /><br/><br/>
+    <RaisedButton 
+      primary={true} 
+      label="2 x 1 Row"
+      onClick={() => dispatch(addRow(2))} /><br/><br/>
+    <RaisedButton 
+      primary={true} 
+      label="3 x 1 Row"
+      onClick={() => dispatch(addRow(3))} /><br/><br/>
   </div>
 )
 

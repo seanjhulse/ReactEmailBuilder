@@ -7,6 +7,7 @@ import {
   SELECT_PICTURE,
   OPEN_DIALOG,
   CLOSE_DIALOG,
+  UPDATE_EMAIL_INFO,
 
   UPDATE_TEXT,
 
@@ -14,6 +15,11 @@ import {
   PREVIEW,
 
   RESTORE_STATE,
+
+  PICK_STYLE,
+  SAVE_STYLE,
+
+  SET_ROW_AND_COLUMN_KEYS,
 } from './actions'
 import { combineReducers } from 'redux'
 import update from 'immutability-helper'
@@ -22,12 +28,16 @@ import { previewEmail } from '../Preview/PreviewEmail';
 const initialState = {
   id: undefined,
   subject: '',
+  to_address: '',
+  from_address: '',
+  preview_address: '',
   template: -1,
   templates: [],
   selectedPicture: {},
   open: false,
   rowKey: '',
   columnKey: '',
+  pickedStyle: '',
 }
 
 function Reducers(state = initialState, action) {
@@ -51,6 +61,11 @@ function Reducers(state = initialState, action) {
     case CHANGE_SUBJECT:
       return Object.assign({}, state, { 
         subject: action.subject 
+      })
+
+    case UPDATE_EMAIL_INFO:
+      return Object.assign({}, state, {
+        [action.name]: action.value
       })
 
     case ADD_PICTURE:
@@ -102,7 +117,6 @@ function Reducers(state = initialState, action) {
       )
 
     case SELECT_PICTURE:
-      console.log(state);
       return Object.assign({}, state, { 
         selectedPicture: action.picture 
       })
@@ -162,18 +176,22 @@ function Reducers(state = initialState, action) {
         body: data
       })
       .then((result) => {
-        if(result.status === 200) {
+        if(result.status === 301) {
           return result.json()
         } else {
-          console.log(result);
           return 'Error';
         }
-      });
+      })
+      .then((response) => {
+        if(response !== 'Error') {
+          window.location.href = `/letters/${response.id}/edit`
+        }
+      })
 
       return state; 
 
     case PREVIEW:
-      previewEmail(state.template);
+      previewEmail(state);
 
     case RESTORE_STATE:
       var temp = action.data;
@@ -181,7 +199,10 @@ function Reducers(state = initialState, action) {
       if(temp !== undefined) {
         return Object.assign({}, state, { 
           id: temp.id,
-          subject: temp.subject,
+          subject: temp.subject !== undefined || temp.subject !== null ? temp.subject : '',
+          to_address: temp.to_address !== undefined || temp.to_address !== null ? temp.to_address : '',
+          from_address: temp.from_address !== undefined || temp.from_address !== null ? temp.from_address : '',
+          preview_address: temp.preview_address !== undefined || temp.preview_address !== null ? temp.preview_address : '',
           template: {
             ...template,
             template: temp.letter,
@@ -194,6 +215,45 @@ function Reducers(state = initialState, action) {
 
     default:
       return state
+
+  case PICK_STYLE:
+    console.log(action);
+    return Object.assign({}, state, { 
+      pickedStyle: action.style
+    })    
+
+  case SAVE_STYLE:
+    console.log(action);
+
+    const pickedStyle = state.pickedStyle.toLowerCase().split(' ').join('_');
+    // get keys
+    var rowKey = state.rowKey;
+    var columnKey = state.columnKey;
+    var indexOfRow = state.template.template.rows.findIndex(row => row.key === rowKey);
+    var indexOfColumn = state.template.template.rows[indexOfRow].columns.findIndex(column => column.key === columnKey);
+
+    return update(state, {
+      template: {
+        template: {
+          rows: {
+              [indexOfRow]: {
+                columns: {
+                  [indexOfColumn]: {
+                    style: {$set: pickedStyle}
+                  }
+                }
+              }
+            }            
+          }
+        }
+      }
+    )
+
+  case SET_ROW_AND_COLUMN_KEYS:
+    return Object.assign({}, state, { 
+      rowKey: action.rowKey,
+      columnKey: action.columnKey,
+    })   
   }
 }
 

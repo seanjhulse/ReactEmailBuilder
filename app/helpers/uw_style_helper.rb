@@ -20,6 +20,8 @@ module UwStyleHelper
             { title: 'New', link: new_letter_path },
           ]
         },
+        { title: 'Media Library', link: pictures_path },
+        { title: 'Email Lists', link: email_lists_path },
       ],
 
       footer_menu_1: {

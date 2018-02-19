@@ -8,8 +8,7 @@ import { styles } from '../../Styles'
 import { updateText } from '../store/actions';
 import MediaUploader from '../MediaUploader/MediaUploader';
 import RemovePicture from '../MediaUploader/RemovePicture';
-import Save from '../Save';
-import PreviewButton from '../Preview/PreviewButton';
+import StylesPicker from '../StylesPicker/StylesPicker';
 import OpenDialog from '../MediaUploader/OpenDialog';
 
 const mapStateToProps = (state) => ({
@@ -17,16 +16,6 @@ const mapStateToProps = (state) => ({
 })
 
 const FormBuilder = ({dispatch, template}) => {
-
-  const SideBar = (
-    <div className="sideBar">
-      <h3>Actions</h3>
-        <div className="buttonGrid">
-          <Save />
-          <PreviewButton />
-        </div>
-    </div>
-  );
 
   // iterate over rows
   const form = template.template.rows.map((row) => {
@@ -37,6 +26,11 @@ const FormBuilder = ({dispatch, template}) => {
       // create column divs by Type
       var columnDiv = null;
 
+      // column style is - by default - null
+      if(column.style === undefined || column.style === null) {
+        column.style = 'Default';
+      }
+
       // HEADER
       if(column.type === 'Header') {
         var style=styles.header;
@@ -44,17 +38,19 @@ const FormBuilder = ({dispatch, template}) => {
 
         if(column.image !== undefined && column.image.picture !== undefined) {
           style.card.background = 'url(' + column.image.picture.url + ')';
-          style.title = {
-            color: '#222',
-            textShadow: 'white 0px 0px 30px'
-          }
         }
 
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type} titleStyle={style.title} />
+          <CardHeader
+            title={column.type}
+            titleStyle={style.title}
+            subtitleStyle={style.subtitle}
+            subtitle="Add an image or don't. We have a default setting as well. "
+            className="cardHeader"
+          />
             <OpenDialog rowKey={row.key} columnKey={column.key} />
-            <MediaUploader rowKey={row.key} columnKey={column.key} />
+          }
           </Card>
         )
       }
@@ -70,7 +66,15 @@ const FormBuilder = ({dispatch, template}) => {
 
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type} titleStyle={style.title} />
+            <CardHeader
+              title={column.type}
+              subtitle="Add some information"
+              className="textHeader"
+            />
+            <p className="subtitleFont">Style: {column.style}</p>
+            <CardActions className="cardActions">
+              <StylesPicker rowKey={row.key} columnKey={column.key} />
+            </CardActions>
             <ReactQuill theme="snow" value={textValue} onChange={(text) => dispatch(updateText(text, row.key, column.key))}/>
             <br />
           </Card>
@@ -93,10 +97,16 @@ const FormBuilder = ({dispatch, template}) => {
         
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type} titleStyle={style.title} />
+            <CardHeader
+              title={column.type}
+              subtitle="Add an image"
+              className="imageHeader"
+            />
+            <p className="subtitleFont">Style: {column.style}</p>
             <CardActions className="cardActions">
               <OpenDialog rowKey={row.key} columnKey={column.key} />
-              <RemovePicture rowKey={row.key} columnKey={column.key} />
+              <RemovePicture rowKey={row.key} columnKey={column.key} disabled={column.image === undefined} />
+              <StylesPicker rowKey={row.key} columnKey={column.key}  />
             </CardActions>
             {Image}
             <br />
@@ -123,10 +133,16 @@ const FormBuilder = ({dispatch, template}) => {
         )
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type.split('_').join(' ')} titleStyle={style.title}/>
+            <CardHeader
+              title={column.type.split('_').join(' ')}
+              subtitle="Add an image and some text below"
+              className="textWithImageHeader"
+            />
+            <p className="subtitleFont">Style: {column.style}</p>
             <CardActions className="cardActions">
               <OpenDialog rowKey={row.key} columnKey={column.key} />
-              <RemovePicture rowKey={row.key} columnKey={column.key} />
+              <RemovePicture rowKey={row.key} columnKey={column.key} disabled={column.image === undefined} />
+              <StylesPicker rowKey={row.key} columnKey={column.key}  />
             </CardActions>
             {Image}
             <br />
@@ -142,7 +158,13 @@ const FormBuilder = ({dispatch, template}) => {
         style.card.padding = '3rem';
         columnDiv = (
           <Card style={style.card}>
-            <CardTitle title={column.type} titleStyle={style.title} />
+            <CardHeader
+              title={column.type}
+              titleStyle={style.title}
+              subtitleStyle={style.subtitle}
+              subtitle="Standard footer with some text"
+              className="footerHeader"
+            />
           </Card>
         )
       }
@@ -166,13 +188,10 @@ const FormBuilder = ({dispatch, template}) => {
   })
 
   return (
-    <div className="grid">
-      <div>
-        {form}
-        <MediaUploader />
-      </div>
-      {SideBar}
-    </div>  
+    <div>
+      {form}
+      <MediaUploader />
+    </div>
   );
 }
 

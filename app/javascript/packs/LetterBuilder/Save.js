@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { save } from './store/actions'
-import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const mapStateToProps = (state) => ({
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 
 const Save = ({dispatch}) => (
   <MuiThemeProvider>
-    <RaisedButton 
+    <FlatButton 
       label="Save"
       onClick={() => dispatch(save())}  
     />

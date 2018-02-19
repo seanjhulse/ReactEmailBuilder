@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180209204609) do
+ActiveRecord::Schema.define(version: 20180219221532) do
+
+  create_table "email_lists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.text "emails"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "letters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "subject"
+    t.text "to_address"
+    t.text "from_address"
+    t.text "preview_address"
     t.text "letter"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

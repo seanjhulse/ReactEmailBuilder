@@ -4,6 +4,7 @@ import Template from './Template';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import TemplateApp from './store/reducers';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 let store = createStore(TemplateApp);
 
@@ -11,7 +12,9 @@ class TemplateBuilder extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Template />
+        <MuiThemeProvider>
+          <Template />
+        </MuiThemeProvider>
       </Provider>
     );
   }

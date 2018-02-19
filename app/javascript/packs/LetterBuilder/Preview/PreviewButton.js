@@ -1,17 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { preview } from '../store/actions'
-import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const mapStateToProps = (state) => ({
   ...state.template
 })
 
-const PreviewButton = ({dispatch}) => (
+const PreviewButton = ({dispatch, disabled}) => (
   <MuiThemeProvider>
-    <RaisedButton 
+    <FlatButton 
       label="Preview"
+      disabled={disabled}
       onClick={() => dispatch(preview())}  
     />
   </MuiThemeProvider>

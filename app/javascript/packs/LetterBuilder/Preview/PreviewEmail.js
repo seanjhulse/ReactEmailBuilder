@@ -1,4 +1,4 @@
-function previewEmail(template) {
+function previewEmail(state) {
     // iterate over rows
 
   // var header;
@@ -107,7 +107,7 @@ function previewEmail(template) {
       "Accept": "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({'letter': template})
+    body: JSON.stringify({'letter': state})
   })
   // send email to mailer
   // fetch('/test_email', {

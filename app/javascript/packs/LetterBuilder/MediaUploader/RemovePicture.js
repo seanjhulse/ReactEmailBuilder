@@ -1,24 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deletePicture } from '../store/actions'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import { styles } from '../../Styles'
 
 const mapStateToProps = (state) => ({
   ...state.selectedPicture
 })
 
-const RemovePicture = ({dispatch, rowKey, columnKey}) => {
+const RemovePicture = ({dispatch, rowKey, columnKey, disabled}) => {
   return (
-    <FloatingActionButton
+    <RaisedButton
       key="RemovePhotoFromColumn"
       className="removePhotoButton"
-      backgroundColor={styles.RaisedButton.removeImage.backgroundColor}
-      mini={true}
+      disabled={disabled}
       onClick={() => { dispatch(deletePicture(rowKey, columnKey)) } }
     >
       <i className="mi md-dark material-icons">delete_forever</i>
-    </FloatingActionButton>
+    </RaisedButton>
   )
 }
 

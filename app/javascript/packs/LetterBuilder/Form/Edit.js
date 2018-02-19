@@ -7,6 +7,9 @@ import FormBuilder from './FormBuilder';
 
 function mapStateToProps(state) {
   return {
+    to_address: state.Reducers.to_address,
+    from_address: state.Reducers.from_address,
+    preview_address: state.Reducers.preview_address,
     subject: state.Reducers.subject,
     template: state.Reducers.template,
     templates: state.Reducers.templates,
@@ -27,6 +30,9 @@ class Edit extends Component {
 
     this.state = {
       subject: '',
+      to_address: '',
+      from_address: '',
+      preview_address: '',
       template: -1,
       templates: [],
       selectedPictures: [],
@@ -54,6 +60,9 @@ class Edit extends Component {
   componentWillReceiveProps(props) {
     this.setState({
       subject: props.subject,
+      to_address: props.to_address,
+      from_address: props.from_address,
+      preview_address: props.preview_address,
       template: props.template,
       templates: props.templates,
       selectedPictures: props.selectedPictures,
@@ -64,11 +73,15 @@ class Edit extends Component {
   render() {
     const { template, pictures } = this.state;
     const Editor = template !== -1 ? <FormBuilder template={template} /> : null;
-
     return (
       <div>
         <h1>Build Your Email</h1>
-        <EmailFields subject={this.state.subject}/>
+        <EmailFields 
+          subject={this.state.subject}
+          preview_address={this.state.preview_address}
+          to_address={this.state.to_address}
+          from_address={this.state.from_address}
+        />
         {Editor}
       </div>
     )

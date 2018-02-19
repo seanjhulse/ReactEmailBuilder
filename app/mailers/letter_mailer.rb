@@ -1,9 +1,17 @@
 class LetterMailer < ApplicationMailer
-  default from: 'sjhulse@wisc.edu'
+  default from: 'donotreply@wisc.edu'
   
-  def test(letter)
-    p letter
+  def test(letter, preview_address)
+    @subject = letter['subject']
     @letter = letter
-    mail(to: 'seanjhulse@gmail.com', subject: 'Inky and React')
+    
+    if letter['from'].present?
+      @from = letter['from']
+    else
+      @from = 'donotreply@wisc.edu'
+    end
+
+    mail(to: preview_address, subject: @subject, from: @from)
+
   end
 end

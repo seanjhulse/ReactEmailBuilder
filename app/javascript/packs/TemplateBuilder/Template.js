@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import { Card } from 'material-ui/Card';
 import AddRowButtons from './rows/AddRowButtons';
 import SortRows from './rows/SortRows';
-import SaveTemplate from './Save';
+import Save from './Save';
 import NameField from './NameField';
 
 function mapStateToProps(state) {
   return {
-    name: '',
+    name: state.Reducers.name,
     rows: [...state.Reducers.rows]
   };
 };
@@ -28,7 +28,10 @@ class Template extends Component {
   }
 
   componentWillReceiveProps(props){
-    this.setState({ rows: props.rows })
+    this.setState({ 
+      name: props.name,
+      rows: props.rows
+    })
   }
 
   render() {
@@ -36,7 +39,7 @@ class Template extends Component {
       <Card className="sideBar">
         <h3>Add a Row</h3>
         <AddRowButtons />
-        <SaveTemplate />
+        <Save disabled={this.state.name === '' || this.state.name === undefined}/>
       </Card>
     );
 
@@ -48,7 +51,6 @@ class Template extends Component {
       <div>
         <h1>Build Your Template</h1>
         <NameField />
-        <hr />
         <div className="grid">
           {this.state.rows.length > 0 ? Rows : <div>Looks like there is nothing here.</div>}
           {SideBar}
