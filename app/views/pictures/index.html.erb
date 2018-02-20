@@ -2,9 +2,11 @@
   <% @pictures.each do |picture| %>
     <div id="picture-<%=picture.id%>">
       <%= button_to(picture_path(picture), remote: true, method: :delete, class: 'pictures-destroy-button') do %>
-        <i class="material-icons md-36 mi md-light">delete</i>
+        <i class="material-icons md-36 mi md-light">delete_forever</i>
       <% end %>
-      <%= image_tag(picture.picture.url, class: "pictures-grid-item") %>
+      <a href=<%= picture.picture.url %>>
+        <%= image_tag(picture.picture.url, class: "pictures-grid-item") %>
+      </a>
     </div>
   <% end %>
 </div>

@@ -4,6 +4,13 @@ import { restoreState } from '../store/actions';
 import TemplatesDropDown from '../TemplatesDropDown';
 import EmailFields from '../EmailFields';
 import FormBuilder from './FormBuilder';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
+import Loading from '../../Loading';
 
 function mapStateToProps(state) {
   return {
@@ -14,13 +21,13 @@ function mapStateToProps(state) {
     template: state.Reducers.template,
     templates: state.Reducers.templates,
     selectedPictures: state.Reducers.selectedPictures,
-    preview: state.Reducers.preview
+    preview: state.Reducers.preview,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    restoreState: (data) => dispatch(restoreState(data))
+    restoreState: (data) => dispatch(restoreState(data)),
   }
 }
 
@@ -37,6 +44,7 @@ class Edit extends Component {
       templates: [],
       selectedPictures: [],
       preview: false,
+      loading: true,
     }
   }
 
@@ -53,7 +61,9 @@ class Edit extends Component {
         },
       })
       .then((response) => response.json())
-      .then((results) => restoreState(results));
+      .then((results) => restoreState(results))
+      .then(() => this.setState({loading: false}))
+      .then(() => window.scrollTo(0, 0))
     }
   }
 
@@ -66,25 +76,45 @@ class Edit extends Component {
       template: props.template,
       templates: props.templates,
       selectedPictures: props.selectedPictures,
-      preview: props.preview
+      preview: props.preview,
     })
   }
 
   render() {
-    const { template, pictures } = this.state;
+    const { template, pictures, loading } = this.state;
     const Editor = template !== -1 ? <FormBuilder template={template} /> : null;
-    return (
-      <div>
-        <h1>Build Your Email</h1>
-        <EmailFields 
-          subject={this.state.subject}
-          preview_address={this.state.preview_address}
-          to_address={this.state.to_address}
-          from_address={this.state.from_address}
-        />
-        {Editor}
-      </div>
-    )
+
+    if(loading) {
+      return (
+        <Loading />
+      )
+    } else {
+      return (
+        <div>
+          <MuiThemeProvider>
+            <Stepper activeStep={2}>
+              <Step>
+                <StepLabel>Design Your Layout</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Choose Your Template</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Create Your Email</StepLabel>
+              </Step>
+            </Stepper>
+          </MuiThemeProvider>
+          <h1>Build Your Email</h1>
+          <EmailFields 
+            subject={this.state.subject}
+            preview_address={this.state.preview_address}
+            to_address={this.state.to_address}
+            from_address={this.state.from_address}
+          />
+          {Editor}
+        </div>
+      )
+    }
   }
 }
 

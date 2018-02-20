@@ -2,8 +2,15 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { fetchTemplates } from '../store/actions';
 import TemplatesDropDown from '../TemplatesDropDown';
-import EmailFields from '../EmailFields';
+import Save from '../Save';
 import FormBuilder from './FormBuilder';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
+import Loading from '../../Loading';
 
 function mapStateToProps(state) {
   return {
@@ -14,12 +21,14 @@ function mapStateToProps(state) {
     template: state.Reducers.template,
     templates: state.Reducers.templates,
     selectedPictures: state.Reducers.selectedPictures,
+    preview: state.Reducers.preview,
+    loading: state.Reducers.loading,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchTemplates: (templates) => dispatch(fetchTemplates(templates))
+    fetchTemplates: (templates) => dispatch(fetchTemplates(templates)),
   }
 }
 
@@ -35,6 +44,8 @@ class Form extends Component {
       template: -1,
       templates: [],
       selectedPictures: [],
+      preview: false,
+      loading: true,
     }
   }
 
@@ -48,7 +59,9 @@ class Form extends Component {
       },
     })
     .then((response) => response.json())
-    .then((results) => fetchTemplates(results));
+    .then((results) => fetchTemplates(results))
+    .then(() => this.setState({loading: false}))
+    .then(() => window.scrollTo(0, 0))
   }
 
   componentWillReceiveProps(props) {
@@ -60,21 +73,41 @@ class Form extends Component {
       template: props.template,
       templates: props.templates,
       selectedPictures: props.selectedPictures,
-      preview: props.preview
+      preview: props.preview,
     })
   }
 
   render() {
-    const { template, pictures } = this.state;
+    const { template, pictures, loading } = this.state;
+      // const Editor = template !== -1 ? <FormBuilder template={template} /> : null;
 
-    // const Editor = template !== -1 ? <FormBuilder template={template} /> : null;
-    return (
-      <div>
-        <h1>Choose a Template for Your Letter</h1>
-        <EmailFields />
-        <TemplatesDropDown template={this.state.template} templates={this.state.templates}/>
-      </div>
-    )
+    if(loading) {
+      return (
+        <Loading />
+      )
+    } else {
+      return (
+        <div>
+          <MuiThemeProvider>
+            <Stepper activeStep={1}>
+              <Step>
+                <StepLabel>Design Your Layout</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Choose Your Template</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Create Your Email</StepLabel>
+              </Step>
+            </Stepper>
+          </MuiThemeProvider>
+          <h1>Choose a Template for Your Letter</h1>
+          <TemplatesDropDown template={this.state.template} templates={this.state.templates}/>
+          <br/>
+          <Save />
+        </div>
+      )
+    }
   }
 }
 

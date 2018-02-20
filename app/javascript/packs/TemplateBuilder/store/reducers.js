@@ -106,7 +106,7 @@ function Reducers(state = initialState, action) {
       })
       .then((response) => {
         if(response !== 'Error') {
-          const URL = '/';
+          const URL = '/letters/new';
           window.location.href = URL;
         }
       });

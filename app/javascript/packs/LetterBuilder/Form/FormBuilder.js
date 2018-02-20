@@ -34,7 +34,7 @@ const FormBuilder = ({dispatch, template}) => {
       // HEADER
       if(column.type === 'Header') {
         var style=styles.header;
-        style.card.padding = '3rem';
+        style.card.padding = '4rem';
 
         if(column.image !== undefined && column.image.picture !== undefined) {
           style.card.background = 'url(' + column.image.picture.url + ')';

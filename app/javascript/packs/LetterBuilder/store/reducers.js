@@ -20,6 +20,8 @@ import {
   SAVE_STYLE,
 
   SET_ROW_AND_COLUMN_KEYS,
+
+  FINISHED_LOADING,
 } from './actions'
 import { combineReducers } from 'redux'
 import update from 'immutability-helper'
@@ -42,10 +44,14 @@ const initialState = {
 
 function Reducers(state = initialState, action) {
   switch (action.type) {
+    
+
     case FETCH_TEMPLATES:
       return Object.assign({}, state, { 
         templates: action.templates
       })
+
+
 
     case SELECT_TEMPLATE:
       var template = -1;
@@ -58,15 +64,21 @@ function Reducers(state = initialState, action) {
         template: template
       })
 
+
+
     case CHANGE_SUBJECT:
       return Object.assign({}, state, { 
         subject: action.subject 
       })
 
+
+
     case UPDATE_EMAIL_INFO:
       return Object.assign({}, state, {
         [action.name]: action.value
       })
+
+
 
     case ADD_PICTURE:
       // get keys
@@ -92,6 +104,8 @@ function Reducers(state = initialState, action) {
         }
       )
 
+
+
     case DELETE_PICTURE:
       // get keys
       var rowKey = action.rowKey;
@@ -116,10 +130,14 @@ function Reducers(state = initialState, action) {
         }
       )
 
+
+
     case SELECT_PICTURE:
       return Object.assign({}, state, { 
         selectedPicture: action.picture 
       })
+
+
 
     case OPEN_DIALOG:
       return Object.assign({}, state, { 
@@ -128,10 +146,14 @@ function Reducers(state = initialState, action) {
         columnKey: action.columnKey,
       }) 
 
+
+
     case CLOSE_DIALOG:
       return Object.assign({}, state, { 
         open: false
       })
+
+
 
     case UPDATE_TEXT:
       // get keys
@@ -157,11 +179,13 @@ function Reducers(state = initialState, action) {
         }
       )
 
+
+
     case SAVE:
       let data = JSON.stringify({letter: state});
-
       var url = '/letters';
       var method = 'post';
+
       if(state.id !== undefined) {
         url = '/letters/' + state.id;
         method = 'put';
@@ -177,21 +201,30 @@ function Reducers(state = initialState, action) {
       })
       .then((result) => {
         if(result.status === 301) {
-          return result.json()
+          return {
+              status: result.status, 
+              response: result.json()
+            };
         } else {
-          return 'Error';
+          return {
+              status: result.status, 
+              response: result.json()
+            };
         }
       })
       .then((response) => {
-        if(response !== 'Error') {
+        if(response['status'] === 301) {
           window.location.href = `/letters/${response.id}/edit`
         }
       })
 
-      return state; 
+      return state;
+
 
     case PREVIEW:
       previewEmail(state);
+
+
 
     case RESTORE_STATE:
       var temp = action.data;
@@ -213,49 +246,55 @@ function Reducers(state = initialState, action) {
         return state
       }
 
-    default:
-      return state
 
-  case PICK_STYLE:
-    console.log(action);
-    return Object.assign({}, state, { 
-      pickedStyle: action.style
-    })    
 
-  case SAVE_STYLE:
-    console.log(action);
+    case PICK_STYLE:
+      return Object.assign({}, state, { 
+        pickedStyle: action.style
+      })    
 
-    const pickedStyle = state.pickedStyle.toLowerCase().split(' ').join('_');
-    // get keys
-    var rowKey = state.rowKey;
-    var columnKey = state.columnKey;
-    var indexOfRow = state.template.template.rows.findIndex(row => row.key === rowKey);
-    var indexOfColumn = state.template.template.rows[indexOfRow].columns.findIndex(column => column.key === columnKey);
 
-    return update(state, {
-      template: {
+
+    case SAVE_STYLE:
+      const pickedStyle = state.pickedStyle.toLowerCase().split(' ').join('_');
+      // get keys
+      var rowKey = state.rowKey;
+      var columnKey = state.columnKey;
+      var indexOfRow = state.template.template.rows.findIndex(row => row.key === rowKey);
+      var indexOfColumn = state.template.template.rows[indexOfRow].columns.findIndex(column => column.key === columnKey);
+
+      return update(state, {
         template: {
-          rows: {
-              [indexOfRow]: {
-                columns: {
-                  [indexOfColumn]: {
-                    style: {$set: pickedStyle}
+          template: {
+            rows: {
+                [indexOfRow]: {
+                  columns: {
+                    [indexOfColumn]: {
+                      style: {$set: pickedStyle}
+                    }
                   }
                 }
-              }
-            }            
+              }            
+            }
           }
         }
-      }
-    )
+      )
 
-  case SET_ROW_AND_COLUMN_KEYS:
-    return Object.assign({}, state, { 
-      rowKey: action.rowKey,
-      columnKey: action.columnKey,
-    })   
+
+
+    case SET_ROW_AND_COLUMN_KEYS:
+      return Object.assign({}, state, { 
+        rowKey: action.rowKey,
+        columnKey: action.columnKey,
+      })   
+
+
+    default:
+      return state
   }
 }
+
+
 
 const LetterApp = combineReducers({
   Reducers,

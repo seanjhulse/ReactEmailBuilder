@@ -3,6 +3,11 @@ import {
   SortableContainer, 
   SortableElement, 
 } from 'react-sortable-hoc';
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
 import { connect } from 'react-redux';
 import { Card } from 'material-ui/Card';
 import AddRowButtons from './rows/AddRowButtons';
@@ -49,7 +54,18 @@ class Template extends Component {
 
     return (
       <div>
-        <h1>Build Your Template</h1>
+        <Stepper activeStep={0}>
+          <Step>
+            <StepLabel>Design Your Layout</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Choose Your Template</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Create Your Email</StepLabel>
+          </Step>
+        </Stepper>
+        <h1>Design Your Layout</h1>
         <NameField />
         <div className="grid">
           {this.state.rows.length > 0 ? Rows : <div>Looks like there is nothing here.</div>}

@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   resources :letters
   resources :pictures
   resources :campaigns
-  resources :email_lists
 
   # MediaUploader actions for AWS bucket
   post 'upload_image' => 'media#upload_image'
