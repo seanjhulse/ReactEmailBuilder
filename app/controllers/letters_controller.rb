@@ -5,7 +5,7 @@ class LettersController < ApplicationController
   # GET /letters
   # GET /letters.json
   def index
-    @letters = Letter.all
+    @letters = Letter.all.order('created_at DESC').paginate(:page => params[:page], :per_page => 15)
 
     respond_to do |format|
       format.json { render json: @letters.to_json }

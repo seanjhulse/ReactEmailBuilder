@@ -41,7 +41,7 @@ class Form extends Component {
       to_address: '',
       from_address: '',
       preview_address: '',
-      template: -1,
+      template: '',
       templates: [],
       selectedPictures: [],
       preview: false,

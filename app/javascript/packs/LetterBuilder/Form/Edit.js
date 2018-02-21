@@ -13,7 +13,9 @@ import {
 import Loading from '../../Loading';
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
+    id: state.Reducers.id,
     to_address: state.Reducers.to_address,
     from_address: state.Reducers.from_address,
     preview_address: state.Reducers.preview_address,
@@ -36,11 +38,12 @@ class Edit extends Component {
     super(props);
 
     this.state = {
+      id: '',
       subject: '',
       to_address: '',
       from_address: '',
       preview_address: '',
-      template: -1,
+      template: {},
       templates: [],
       selectedPictures: [],
       preview: false,
@@ -61,7 +64,7 @@ class Edit extends Component {
         },
       })
       .then((response) => response.json())
-      .then((results) => restoreState(results))
+      .then((results) => restoreState(results[0]))
       .then(() => this.setState({loading: false}))
       .then(() => window.scrollTo(0, 0))
     }
@@ -69,6 +72,7 @@ class Edit extends Component {
 
   componentWillReceiveProps(props) {
     this.setState({
+      id: props.id,
       subject: props.subject,
       to_address: props.to_address,
       from_address: props.from_address,
@@ -82,7 +86,8 @@ class Edit extends Component {
 
   render() {
     const { template, pictures, loading } = this.state;
-    const Editor = template !== -1 ? <FormBuilder template={template} /> : null;
+    console.log(template);
+    const Editor = template !== '' ? <FormBuilder template={template} /> : null;
 
     if(loading) {
       return (
@@ -106,6 +111,7 @@ class Edit extends Component {
           </MuiThemeProvider>
           <h1>Build Your Email</h1>
           <EmailFields 
+            id={this.state.id}
             subject={this.state.subject}
             preview_address={this.state.preview_address}
             to_address={this.state.to_address}

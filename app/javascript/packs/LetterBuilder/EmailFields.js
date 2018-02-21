@@ -7,15 +7,18 @@ import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card'
 import Divider from 'material-ui/Divider'
 import Save from './Save'
 import PreviewButton from './Preview/PreviewButton'
+import FlatButton from 'material-ui/FlatButton'
+import { createCampaign } from './CreateCampaign'
 
 const mapStateToProps = (state) => ({
+  ...state.Reducers.id,
   ...state.Reducers.subject,
   ...state.Reducers.to_address,
   ...state.Reducers.from_address,
   ...state.Reducers.preview_address,
 })
 
-const EmailFields = ({dispatch, subject, preview_address, to_address, from_address}) => {
+const EmailFields = ({dispatch, id, subject, preview_address, to_address, from_address}) => {
   return (
     <MuiThemeProvider>
       <Card>
@@ -28,6 +31,11 @@ const EmailFields = ({dispatch, subject, preview_address, to_address, from_addre
         <CardActions>
           <Save disabled={subject === null || subject === undefined}/>
           <PreviewButton disabled={preview_address === null || preview_address === '' || preview_address === undefined}/>
+          <FlatButton 
+            label="Create Campaign" 
+            disabled={id === ''} 
+            secondary={true}
+            onClick={() => {confirm("Are you sure you want to create a campaign?") ? createCampaign(id) : null } } />
         </CardActions>
         <Divider />
         <CardText expandable={true}>

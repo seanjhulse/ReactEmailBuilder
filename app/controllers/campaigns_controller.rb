@@ -6,9 +6,16 @@ class CampaignsController < ApplicationController
   end
 
   def new
-    @campaign = Campaign.create(:letter_id => params[:letter_id])
+    @campaign = Campaign.new
+  end
+
+  def create
+    @campaign = Campaign.new(letter_id: params[:letter_id])
     if @campaign.save
-      redirect_to edit_campaign_path(@campaign)
+      respond_to do |format|
+        format.json { render json: @campaign.to_json }
+        format.html {}
+      end
     end
   end
 
@@ -30,6 +37,11 @@ class CampaignsController < ApplicationController
 
     @campaign = Campaign.find(campaign_params[:id])
     @campaign.update(letter_id: campaign_params[:letter_id], subscriber_id: campaign_params[:subscriber_id], name: campaign_params[:campaign_name], from_address: campaign_params[:from_address], subject: campaign_params[:subject])
+  end
+
+  def destroy
+    @campaign = Campaign.find(params[:id])
+    @campaign.destroy
   end
 
 

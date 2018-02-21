@@ -28,12 +28,12 @@ import update from 'immutability-helper'
 import { previewEmail } from '../Preview/PreviewEmail';
 
 const initialState = {
-  id: undefined,
+  id: '',
   subject: '',
   to_address: '',
   from_address: '',
   preview_address: '',
-  template: -1,
+  template: {},
   templates: [],
   selectedPicture: {},
   open: false,
@@ -221,14 +221,14 @@ function Reducers(state = initialState, action) {
 
     case RESTORE_STATE:
       var temp = action.data;
-
+      console.log(temp);
       if(temp !== undefined) {
         return Object.assign({}, state, { 
           id: temp.id,
-          subject: temp.subject !== undefined || temp.subject !== null ? temp.subject : '',
-          to_address: temp.to_address !== undefined || temp.to_address !== null ? temp.to_address : '',
-          from_address: temp.from_address !== undefined || temp.from_address !== null ? temp.from_address : '',
-          preview_address: temp.preview_address !== undefined || temp.preview_address !== null ? temp.preview_address : '',
+          subject: temp.subject,
+          to_address: temp.to_address,
+          from_address: temp.from_address,
+          preview_address: temp.preview_address,
           template: {
             ...template,
             template: temp.letter,
@@ -238,6 +238,8 @@ function Reducers(state = initialState, action) {
       } else {
         return state
       }
+      console.log("State", state);
+      return state;
 
 
 

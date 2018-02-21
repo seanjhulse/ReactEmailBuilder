@@ -1,11 +1,20 @@
+<h1>Campaigns</h1>
 <table>
   <thead>
     <th>ID</th>
+    <th>Name</th>
+    <th>Subject</th>
+    <th>Date Created</th>
+    <th>Actions</th>
   </thead>
   <tbody>
     <% @campaigns.each do |campaign| %>
-      <tr>
-        <td><%= link_to(campaign.id, edit_campaign_path(campaign)) %></td>
+      <tr id="campaign-<%=campaign.id%>">
+        <td><%= campaign.id %></td>
+        <td><%= link_to(campaign.name, edit_campaign_path(campaign)) if campaign.name.present? %></td>
+        <td><%= campaign.subject if campaign.subject.present? %></td>
+        <td><%= campaign.created_at.strftime('%h %d, %Y') if campaign.created_at.present? %></td>
+        <td><%= button_to("Delete", campaign_path(campaign.id), method: :delete, remote: true, class: 'uw-button-small delete-button') %></td>
       </tr> 
     <% end %>
   </tbody>

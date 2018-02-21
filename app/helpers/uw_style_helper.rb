@@ -21,7 +21,7 @@ module UwStyleHelper
         #   ]
         # },
         { title: 'Design an Email', link: new_template_path },
-        { title: 'Emails', link: root_path },
+        { title: 'Emails', link: letters_path },
         { title: 'Campaigns', link: campaigns_path },
         { title: 'Media Library', link: pictures_path },
         { title: 'Subscriber Lists', link: subscribers_path },
