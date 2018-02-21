@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180209204609) do
+ActiveRecord::Schema.define(version: 20180221185112) do
+
+  create_table "campaigns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "letter_id"
+    t.string "from_address"
+    t.string "subject"
+    t.string "name"
+    t.bigint "subscriber_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["letter_id"], name: "index_campaigns_on_letter_id"
+    t.index ["subscriber_id"], name: "index_campaigns_on_subscriber_id"
+  end
+
+  create_table "emails", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "subscriber_id"
+    t.string "email_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscriber_id"], name: "index_emails_on_subscriber_id"
+  end
 
   create_table "letters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "subject"
@@ -28,6 +48,12 @@ ActiveRecord::Schema.define(version: 20180209204609) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "subscribers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "templates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.text "template"
@@ -35,4 +61,7 @@ ActiveRecord::Schema.define(version: 20180209204609) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "campaigns", "letters"
+  add_foreign_key "campaigns", "subscribers"
+  add_foreign_key "emails", "subscribers"
 end

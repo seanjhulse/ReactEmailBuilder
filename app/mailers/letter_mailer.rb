@@ -12,6 +12,11 @@ class LetterMailer < ApplicationMailer
     end
 
     mail(to: preview_address, subject: @subject, from: @from)
+  end
 
+
+  def send_campaign(subject, letter, to, from)
+    @letter = letter
+    mail(to: to, subject: subject, from: from)
   end
 end

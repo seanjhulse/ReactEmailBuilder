@@ -1,0 +1,5 @@
+<%= javascript_pack_tag 'CampaignMaker/CampaignMaker' %>
+<%= content_tag :div,
+  id: "campaign_data",
+  data: @campaign.to_json do %>
+<% end %>

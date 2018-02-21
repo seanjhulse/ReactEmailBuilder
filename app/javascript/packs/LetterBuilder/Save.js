@@ -22,6 +22,12 @@ class Save extends Component {
     this.state = {
       snackbar: false,
     }
+
+    this.onRequestHandler = this.onRequestHandler.bind(this);
+  }
+
+  onRequestHandler() {
+    this.setState({snackbar: !this.state.snackbar})
   }
 
   render() {
@@ -30,7 +36,8 @@ class Save extends Component {
         <MuiThemeProvider>
           <FlatButton 
             label="Save"
-            onClick={() => { this.props.save(); this.setState({snackbar: true}) } }  
+            disabled={this.props.disabled}
+            onClick={() => { this.props.save(); this.setState({snackbar: true}); } }  
           />
         </MuiThemeProvider>
         <MuiThemeProvider>
@@ -38,6 +45,7 @@ class Save extends Component {
             open={this.state.snackbar}
             message="Email has been saved!"
             autoHideDuration={3500}
+            onRequestClose={this.onRequestHandler}
           />
         </MuiThemeProvider>
       </span>

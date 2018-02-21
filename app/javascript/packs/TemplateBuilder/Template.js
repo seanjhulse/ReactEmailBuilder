@@ -59,10 +59,10 @@ class Template extends Component {
             <StepLabel>Design Your Layout</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Choose Your Template</StepLabel>
+            <StepLabel>Create Your Email</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Create Your Email</StepLabel>
+            <StepLabel>Create Your Campaign</StepLabel>
           </Step>
         </Stepper>
         <h1>Design Your Layout</h1>

@@ -92,15 +92,15 @@ class Edit extends Component {
       return (
         <div>
           <MuiThemeProvider>
-            <Stepper activeStep={2}>
+            <Stepper activeStep={1}>
               <Step>
                 <StepLabel>Design Your Layout</StepLabel>
               </Step>
               <Step>
-                <StepLabel>Choose Your Template</StepLabel>
+                <StepLabel>Create Your Email</StepLabel>
               </Step>
               <Step>
-                <StepLabel>Create Your Email</StepLabel>
+                <StepLabel>Send Out the Campaign</StepLabel>
               </Step>
             </Stepper>
           </MuiThemeProvider>

@@ -29,7 +29,7 @@ class PreviewButton extends Component {
       <span>
         <MuiThemeProvider>
           <FlatButton 
-            data-confirm="Are you sure you want to send out this e-mail?"
+            data-confirm="Are you sure you want to send out this e-mail to your preview address(es)?"
             label="Preview"
             disabled={this.props.disabled}
             onClick={() => { this.props.preview(); this.setState({snackbar: true}) } }  

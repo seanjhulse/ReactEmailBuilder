@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  letter: one
+  to_address: MyText
+  from_address: MyString
+
+two:
+  letter: two
+  to_address: MyText
+  from_address: MyString

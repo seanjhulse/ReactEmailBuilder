@@ -6,21 +6,25 @@ module UwStyleHelper
       ],
 
       main_menu: [
-        {
-          title: 'Templates', link: '#',
-          :dropdown => [
-            { title: 'View All', link: templates_path },
-            { title: 'New', link: new_template_path },
-          ]
-        },
-        {
-          title: 'Letters', link: '#',
-          :dropdown => [
-            { title: 'View All', link: letters_path },
-            { title: 'New', link: new_letter_path },
-          ]
-        },
+        # {
+        #   title: 'Templates', link: '#',
+        #   :dropdown => [
+        #     { title: 'View All', link: templates_path },
+        #     { title: 'New', link: new_template_path },
+        #   ]
+        # },
+        # {
+        #   title: 'Letters', link: '#',
+        #   :dropdown => [
+        #     { title: 'View All', link: letters_path },
+        #     { title: 'New', link: new_letter_path },
+        #   ]
+        # },
+        { title: 'Design an Email', link: new_template_path },
+        { title: 'Emails', link: root_path },
+        { title: 'Campaigns', link: campaigns_path },
         { title: 'Media Library', link: pictures_path },
+        { title: 'Subscriber Lists', link: subscribers_path },
       ],
 
       footer_menu_1: {

@@ -21,3 +21,16 @@
 .material-icons {
   vertical-align: middle !important;
 }
+.uw-button-small {
+  font-size: small !important;
+  font-weight: 700 !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  height: 30px !important;
+}
+.delete-button {
+  background-color: #de0c0c !important;
+  &:hover {
+    background-color: #bd0707 !important;
+  }
+}

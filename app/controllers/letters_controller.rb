@@ -6,6 +6,11 @@ class LettersController < ApplicationController
   # GET /letters.json
   def index
     @letters = Letter.all
+
+    respond_to do |format|
+      format.json { render json: @letters.to_json }
+      format.html
+    end
   end
 
   # GET /letters/1
@@ -16,9 +21,9 @@ class LettersController < ApplicationController
 
   # GET /letters/new
   def new
-    @letter = Letter.new
-    @templates = Template.all
-    @picture = Picture.new
+    letter = JSON.parse(params[:template])
+    @letter = Letter.create(letter: letter)
+    redirect_to edit_letter_path(@letter)
   end
 
   # GET /letters/1/edit
@@ -59,9 +64,8 @@ class LettersController < ApplicationController
     @letter = OpenStruct.new(params[:letter])
     @preview_addresses = @letter['preview_address'].split(',')
     @preview_addresses.each do |preview_address|
-      @mail = LetterMailer.test(@letter, preview_address).deliver!
+      LetterMailer.test(@letter, preview_address).deliver!
     end
-    Premailer::Rails::Hook.perform(@mail)
   end
 
   # DELETE /letters/1
@@ -69,7 +73,7 @@ class LettersController < ApplicationController
   def destroy
     @letter.destroy
     respond_to do |format|
-      format.html { redirect_to letters_url }
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end

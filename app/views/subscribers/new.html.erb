@@ -1,0 +1,9 @@
+<h1>New Subscriber List</h1>
+<%= form_for @subscriber do |f| %>
+  <%= f.label "Name" %>
+  <%= f.text_field :name, placeholder: "Name of the subscriber list" %>
+  <%= f.label "Subscriber list" %>
+  <%= f.text_area :emails, placeholder: "Add emails here separated by a comma", value: '' %>
+  <br/>
+  <%= f.submit 'Submit' %>
+<% end %>

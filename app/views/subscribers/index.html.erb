@@ -1,0 +1,22 @@
+<h1>Subscribers</h1>
+<div>
+  <%= link_to("New Subscriber", new_subscriber_path) %>
+</div>
+<% unless @subscribers.nil? %>
+  <table>
+    <thead>
+      <th>ID</th>
+      <th>Name</th>
+    </thead>
+    <tbody>
+      <% @subscribers.each do |subscriber| %>
+      <tr>
+        <td><%= subscriber.id %></td>
+        <td><%= link_to(subscriber.name, edit_subscriber_path(subscriber.id)) %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  Looks like you don't have any subscriber lists! You should make one!
+<% end %>

@@ -200,17 +200,10 @@ function Reducers(state = initialState, action) {
         body: data
       })
       .then((result) => {
-        if(result.status === 301) {
-          return {
-              status: result.status, 
-              response: result.json()
-            };
-        } else {
-          return {
-              status: result.status, 
-              response: result.json()
-            };
-        }
+        return {
+            status: result.status, 
+            response: result.json()
+          }
       })
       .then((response) => {
         if(response['status'] === 301) {

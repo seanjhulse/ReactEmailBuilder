@@ -21,52 +21,35 @@ const EmailFields = ({dispatch, subject, preview_address, to_address, from_addre
       <Card>
         <CardHeader
           title="Email Information"
-          subtitle="Fill out this information before sending your email"
+          subtitle="Click me to fill out some information!"
           actAsExpander={true}
           showExpandableButton={true}
         />
         <CardActions>
-          <Save />
+          <Save disabled={subject === null || subject === undefined}/>
           <PreviewButton disabled={preview_address === null || preview_address === '' || preview_address === undefined}/>
         </CardActions>
         <Divider />
         <CardText expandable={true}>
           <TextField
-            underlineShow={false}
             floatingLabelText="Preview Address:"
             fullWidth={true}
+            errorStyle={{color: 'rgb(0, 188, 212)'}}
+            floatingLabelStyle={{color: 'rgb(0, 188, 212)'}}
+            errorText="Separate multiple email addresses with commas (spaces are ignored)"
             hintText="Please enter a valid email address in order to send a preview of the email."
             value={preview_address !== null ? preview_address : ''} 
             onChange={(e) => dispatch(updateEmailInfo('preview_address', e.target.value))}       
           />
-          <Divider />
-          <TextField
-            underlineShow={false}
-            type="text" 
-            fullWidth={true}
-            floatingLabelText="To:"
-            hintText="someone@wisc.edu"
-            value={to_address !== null ? to_address : ''} 
-            onChange={(e) => dispatch(updateEmailInfo('to_address', e.target.value))}
-          />
-          <Divider />
-          <TextField
-            underlineShow={false}
-            type="text" 
-            floatingLabelText="From:"
-            fullWidth={true}
-            hintText="someone@wisc.edu"
-            value={from_address !== null ? from_address : ''} 
-            onChange={(e) => dispatch(updateEmailInfo('from_address', e.target.value))}
-          />
-          <Divider />
           <TextField
             type="text" 
-            underlineShow={false}
-            floatingLabelText="Subject:"
+            floatingLabelText="Name:"
             fullWidth={true}
-            hintText="Subject:"
+            hintText="Name:"
+            errorStyle={{color: 'rgb(0, 188, 212)'}}
+            floatingLabelStyle={{color: 'rgb(0, 188, 212)'}}
             value={subject} 
+            errorText="The name field will be used as a temporary subject / headline when you preview this email."
             onChange={(e) => dispatch(changeSubject(e.target.value))} />
         </CardText>
       </Card>
